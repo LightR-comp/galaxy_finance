@@ -1,6 +1,7 @@
 // pages/index.tsx  –  Login page
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { api } from "../lib/api";
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -21,8 +22,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged((user) => {
-      if (user) router.replace("/dashboard");
+    const unsub = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          await api.login();
+          router.replace("/dashboard");
+        } catch (error) {
+          console.error("Lỗi đồng bộ Backend:", error);
+        }
+      }
     });
     return unsub;
   }, [router]);
@@ -30,7 +38,6 @@ export default function LoginPage() {
   const handleGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push("/dashboard");
     } catch (err: any) {
       setError("Đăng nhập Google thất bại");
     }
@@ -49,7 +56,6 @@ export default function LoginPage() {
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
       }
-      router.push("/dashboard");
     } catch (err: any) {
       const code = err.code;
       if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-credential")
@@ -174,7 +180,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="flex gap-2 opacity-40">s
+          <div className="flex gap-2 opacity-40">
             {[...Array(5)].map((_, i) => (
               <span key={i} className="text-star-400 text-xs animate-twinkle" style={{ animationDelay: `${i * 0.4}s` }}>✦</span>
             ))}
