@@ -1,0 +1,16 @@
+# Dành cho Frontend (Next.js/Node.js)
+.next/
+node_modules/
+.env*
+.DS_Store
+
+# Dành cho Backend (nếu bạn gộp chung repo)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.venv/
+serviceAccountKey.json
+data.json
