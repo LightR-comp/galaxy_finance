@@ -28,23 +28,15 @@ cd galaxy-finance
 
 Backend sử dụng FastAPI và Firebase Admin SDK để xử lý API và xác thực.
 
-**Bước 1:** Di chuyển vào thư mục backend
-```bash
-cd backend
-```
-
-**Bước 2:** Cài đặt các thư viện cần thiết
+**Bước 1:** Cài đặt các thư viện cần thiết
 ```bash
 pip install -r requirements.txt
 ```
 
-**Bước 3:** Cấu hình Firebase
-- Bạn cần có file `serviceAccountKey.json` lấy từ Firebase Console (Project Settings > Service Accounts > Generate new private key).
-- Đặt file `serviceAccountKey.json` vào ngay trong thư mục `backend/` (ngang hàng với file `main.py`).
-
-**Bước 4:** Khởi chạy server
+**Bước 2:** Khởi chạy server
 ```bash
-python main.py
+cd backend
+uvicorn main:app --reload --port 8000
 ```
 *Backend sẽ chạy tại địa chỉ: `http://localhost:8000`*
 
