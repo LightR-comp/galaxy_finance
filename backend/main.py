@@ -113,15 +113,15 @@ async def get_me(decoded: dict = Depends(get_current_user)):
 
     try:
         firebase_user = auth.get_user(uid)
-        display_name = firebase_user.display_name or ""
-        email = firebase_user.email or ""
-        photo_url = firebase_user.photo_url or ""
-        provider = firebase_user.provider_data[0].provider_id if firebase_user.provider_data else "unknown"
+        display_name = firebase_user.display_name or decoded.get("name", "") or decoded.get("email", "").split("@")[0]
+        email = firebase_user.email or decoded.get("email", "")
+        photo_url = firebase_user.photo_url or decoded.get("picture", "")
+        provider = firebase_user.provider_data[0].provider_id if firebase_user.provider_data else "password"
     except Exception:
-        display_name = decoded.get("name", "")
+        display_name = decoded.get("name", "") or decoded.get("email", "").split("@")[0]
         email = decoded.get("email", "")
         photo_url = decoded.get("picture", "")
-        provider = "unknown"
+        provider = "password"
 
     total_income  = sum(t["amount"] for t in txs if t["type"] == "income")
     total_expense = sum(t["amount"] for t in txs if t["type"] == "expense")

@@ -75,7 +75,7 @@
 
             <div className="stat-card glow-purple">
               <div className="flex items-start justify-between mb-4">
-                <p className="text-slate-400 text-sm font-medium">Số dư ròng</p>
+                <p className="text-slate-400 text-sm font-medium">Chênh lệch</p>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(139,92,246,0.15)" }}>
                   <DollarSign size={18} className="text-nebula-400" />
                 </div>
